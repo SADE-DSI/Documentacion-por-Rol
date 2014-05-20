@@ -5,13 +5,13 @@ CREATE TABLE persona (
 	peEmail VARCHAR(30),
 	peTelefono VARCHAR(14),
 	peTipo VARCHAR(12),
-	peDescripcion TEXT,
-	peDireccion TEXT,
+	peDescripcion VARCHAR(767),
+	peDireccion VARCHAR(767),
 	CONSTRAINT pkPersona PRIMARY kEY(peRut),
 	CONSTRAINT check1Persona CHECK(peActivo = 0 OR peActivo = 1) 
 );
 
-CREATE TABLE arrendatarioDueno (
+CREATE TABLE arrendatariodueno (
 	adRut VARCHAR(13),
 	adClave VARCHAR(30),
 	adEstado INT,
@@ -21,14 +21,14 @@ CREATE TABLE arrendatarioDueno (
 	CONSTRAINT check1AD CHECK(adEstado = 0 OR adEstado = 1) 
 );
 
-CREATE TABLE conserjeAdministrador (
+CREATE TABLE conserjeadministrador (
 	caRut VARCHAR(13),
 	caClave VARCHAR(30),
 	CONSTRAINT pkConserje PRIMARY kEY(caRut),
 	CONSTRAINT fk1Conserje FOREIGN KEY (caRut) REFERENCES persona(peRut)
 );
 
-CREATE TABLE contratoPersonal (
+CREATE TABLE contratopersonal (
 	peRut VARCHAR(13),
 	cpAFPNombre VARCHAR(20),
 	cpAFPMonto INTEGER,
@@ -41,7 +41,7 @@ CREATE TABLE contratoPersonal (
 	CONSTRAINT fk1CP FOREIGN KEY (peRut) REFERENCES persona(peRut)
 );
 
-CREATE TABLE sueldoPersonal (
+CREATE TABLE sueldopersonal (
 	peRut VARCHAR(13),
 	spFechaPago DATE,
 	spOtrosDescuentos INTEGER,
@@ -54,38 +54,36 @@ CREATE TABLE sueldoPersonal (
 CREATE TABLE visita(
 	viRut VARCHAR (13),
 	viNombresApellidos VARCHAR (80),
-	viObs TEXT,
+	viObs VARCHAR(767),
 	CONSTRAINT pkVisita PRIMARY KEY (viRut)
 );
 
-
-
-CREATE TABLE dptoLocal (
+CREATE TABLE dptolocal (
 	dlDireccion VARCHAR (767),
 	dlMts2Construidos FLOAT,
 	dlValorArriendo INTEGER,
 	CONSTRAINT pkDptoLocal PRIMARY KEY (dlDireccion)
 );
 
-CREATE TABLE espacioComun(
+CREATE TABLE espaciocomun(
 	ecCodigo VARCHAR (30),
 	ecDescripcion VARCHAR (767),
 	ecFrecuencia DECIMAL,
 	CONSTRAINT pkEC PRIMARY KEY (ecCodigo)
 );
 
-CREATE TABLE reservaEspacioComun (
+CREATE TABLE reservaespaciocomun (
 	ecCodigo VARCHAR (30),
 	reFechaInicio DATETIME,
 	reFechaFin DATETIME,
 	adRut VARCHAR (13),
 	CONSTRAINT pkREC PRIMARY KEY(ecCodigo, reFechaInicio),
-	CONSTRAINT fkREC1 FOREIGN KEY  (ecCodigo) REFERENCES espacioComun(ecCodigo),
-	CONSTRAINT fkREC2 FOREIGN KEY  (adRut) REFERENCES arrendatarioDueno(adRut),
+	CONSTRAINT fkREC1 FOREIGN KEY  (ecCodigo) REFERENCES espaciocomun(ecCodigo),
+	CONSTRAINT fkREC2 FOREIGN KEY  (adRut) REFERENCES arrendatariodueno(adRut),
 	CONSTRAINT checkREC1 CHECK (reFechaInicio < reFechaFin)
 );
 
-CREATE TABLE pagoMensual (
+CREATE TABLE pagomensual (
 	pmCodigo SERIAL UNIQUE,
 	dlDireccion VARCHAR (767),
 	pmFechaPago DATE,
@@ -93,20 +91,20 @@ CREATE TABLE pagoMensual (
 	pmObs VARCHAR (767),
 	pmFechaRealPago DATE,
 	CONSTRAINT pkPagoMensual PRIMARY KEY (dlDireccion, pmFechaPago),
-	CONSTRAINT kfPagoMensual FOREIGN KEY (dlDireccion) REFERENCES dptoLocal (dlDireccion)
+	CONSTRAINT kfPagoMensual FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion)
 );
 
-CREATE TABLE resideDpto (
+CREATE TABLE residedpto (
 	adRut VARCHAR (13),
 	dlDireccion VARCHAR (767),
 	fechaInicio DATE NOT NULL,
 	fechaFin DATE,
 	CONSTRAINT pkResideDpto PRIMARY kEY (adRut, dlDireccion, fechaInicio),
-	CONSTRAINT fkResideDpto1 FOREIGN KEY (dlDireccion) REFERENCES DptoLocal (dlDireccion),
-	CONSTRAINT fkResideDpto2 FOREIGN KEY (adRut) REFERENCES arrendatarioDueno (adRut)
+	CONSTRAINT fkResideDpto1 FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion),
+	CONSTRAINT fkResideDpto2 FOREIGN KEY (adRut) REFERENCES arrendatariodueno (adRut)
 );
 
-CREATE TABLE visitaDpto (
+CREATE TABLE visitadpto (
 	viRut VARCHAR (13),
 	dlDireccion VARCHAR (767),
 	vdFechaIngreso DATETIME,
@@ -114,8 +112,8 @@ CREATE TABLE visitaDpto (
 	vdFechaSalida DATETIME,
 	CONSTRAINT pkVisitaDpto PRIMARY KEY(viRut, vdFechaIngreso),
 	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut),
-	CONSTRAINT fkVisitaDpto2 FOREIGN KEY (dlDireccion) REFERENCES dptoLocal(dlDireccion),
-	CONSTRAINT fkVisitaDpto3 FOREIGN KEY (caRut) REFERENCES conserjeAdministrador (caRut),
+	CONSTRAINT fkVisitaDpto2 FOREIGN KEY (dlDireccion) REFERENCES dptolocal(dlDireccion),
+	CONSTRAINT fkVisitaDpto3 FOREIGN KEY (caRut) REFERENCES conserjeadministrador (caRut),
 	CONSTRAINT checkVD1 CHECK (vdFechaingreso < vdFechaSalida)
 );
 
@@ -125,7 +123,7 @@ CREATE TABLE codigo (
 	CONSTRAINT pkCodigo PRIMARY KEY (coCodigo)
 );
 
-CREATE TABLE compromisoPago	 (
+CREATE TABLE compromisopago	 (
 	coCodigo INTEGER,
 	cpFechaVencimiento DATE,
 	cpMonto INTEGER,
@@ -155,7 +153,13 @@ CREATE TABLE aviso(
 	CONSTRAINT pkAviso PRIMARY KEY(avCodigo)
 );
 
-
+CREATE TABLE sugerencia(
+	sgId INTEGER,
+	sgComentario VARCHAR (767),
+	sgRespuesta VARCHAR (767),
+	sgLeido INTEGER,
+	CONSTRAINT checkMaterial CHECK (sgLeido = 1 OR sgLeido = 0)
+);
 
 
 
