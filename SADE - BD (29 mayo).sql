@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS persona (
 	peDescripcion VARCHAR(767),
 	peDireccion VARCHAR(767),
 	CONSTRAINT pkPersona PRIMARY kEY(peRut),
-	CONSTRAINT check1Persona CHECK(peActivo = 0 OR peActivo = 1) 
+	CONSTRAINT check1Persona CHECK(peActivo=0 OR peActivo = 1) 
 );
 
 CREATE TABLE IF NOT EXISTS arrendatariodueno (
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS arrendatariodueno (
 	adEstado INT DEFAULT '1',
 	adFechaLiberacion DATE DEFAULT NULL,
 	CONSTRAINT pkAD PRIMARY kEY(adRut),
-	CONSTRAINT fk1AD FOREIGN KEY (adRut) REFERENCES persona(peRut), 
+	CONSTRAINT fk1AD FOREIGN KEY (adRut) REFERENCES persona(peRut) ON UPDATE CASCADE, 
 	CONSTRAINT check1AD CHECK(adEstado = 0 OR adEstado = 1) 
 );
 
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS conserjeadministrador (
 	caRut VARCHAR(13),
 	caClave VARCHAR(30),
 	CONSTRAINT pkConserje PRIMARY kEY(caRut),
-	CONSTRAINT fk1Conserje FOREIGN KEY (caRut) REFERENCES persona(peRut)
+	CONSTRAINT fk1Conserje FOREIGN KEY (caRut) REFERENCES persona(peRut) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS contratopersonal (
@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS contratopersonal (
 	cpSueldoBruto INTEGER,
 	cpFechaInicio DATE,
 	cpFechaFin DATE,
-	CONSTRAINT pkCP PRIMARY kEY(peRut),
-	CONSTRAINT fk1CP FOREIGN KEY (peRut) REFERENCES persona(peRut)
+	CONSTRAINT pkCP PRIMARY kEY(peRut, cpFechaInicio),
+	CONSTRAINT fk1CP FOREIGN KEY (peRut) REFERENCES persona(peRut) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS sueldopersonal (
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS sueldopersonal (
 	spOtrosDescuentos INTEGER,
 	spHorasExtras DECIMAL,
 	CONSTRAINT pkSueldoPersonal PRIMARY kEY(peRut, spFechaPago),
-	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (peRut) REFERENCES persona(peRut)
+	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (peRut) REFERENCES persona(peRut) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS visita(
@@ -66,11 +66,14 @@ CREATE TABLE IF NOT EXISTS dptolocal (
 	CONSTRAINT check1dptolocal CHECK(dlActivo=0 OR dlActivo=1) 
 );
 
-
 CREATE TABLE IF NOT EXISTS espaciocomun(
 	ecCodigo VARCHAR (30),
 	ecDescripcion VARCHAR (767),
-	CONSTRAINT pkEC PRIMARY KEY (ecCodigo)
+	ecFrecuencua INTEGER,
+	ecActivo INTEGER,
+	CONSTRAINT pkEC PRIMARY KEY (ecCodigo),
+	CONSTRAINT check1EspComun CHECK(ecActivo=0 OR ecActivo=1) 
+
 );
 
 CREATE TABLE IF NOT EXISTS reservaespaciocomun (
@@ -79,8 +82,8 @@ CREATE TABLE IF NOT EXISTS reservaespaciocomun (
 	reFechaFin DATETIME,
 	adRut VARCHAR (13),
 	CONSTRAINT pkREC PRIMARY KEY(ecCodigo, reFechaInicio),
-	CONSTRAINT fkREC1 FOREIGN KEY  (ecCodigo) REFERENCES espaciocomun(ecCodigo),
-	CONSTRAINT fkREC2 FOREIGN KEY  (adRut) REFERENCES arrendatariodueno(adRut),
+	CONSTRAINT fkREC1 FOREIGN KEY  (ecCodigo) REFERENCES espaciocomun(ecCodigo) ON UPDATE CASCADE,
+	CONSTRAINT fkREC2 FOREIGN KEY  (adRut) REFERENCES arrendatariodueno(adRut) ON UPDATE CASCADE,
 	CONSTRAINT checkREC1 CHECK (reFechaInicio < reFechaFin)
 );
 
@@ -103,8 +106,8 @@ CREATE TABLE IF NOT EXISTS residedpto (
 	rdFechaInicio DATE NOT NULL,
 	rdFechaFin DATE,
 	CONSTRAINT pkResideDpto PRIMARY kEY (adRut, dlDireccion, fechaInicio),
-	CONSTRAINT fkResideDpto1 FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion),
-	CONSTRAINT fkResideDpto2 FOREIGN KEY (adRut) REFERENCES arrendatariodueno (adRut)
+	CONSTRAINT fkResideDpto1 FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion) ON UPDATE CASCADE,
+	CONSTRAINT fkResideDpto2 FOREIGN KEY (adRut) REFERENCES arrendatariodueno (adRut) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS visitadpto (
@@ -116,7 +119,7 @@ CREATE TABLE IF NOT EXISTS visitadpto (
 	CONSTRAINT pkVisitaDpto PRIMARY KEY(viRut, vdFechaIngreso),
 	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut),
 	CONSTRAINT fkVisitaDpto2 FOREIGN KEY (dlDireccion) REFERENCES dptolocal(dlDireccion) ON UPDATE CASCADE,
-	CONSTRAINT fkVisitaDpto3 FOREIGN KEY (caRut) REFERENCES conserjeadministrador (caRut),
+	CONSTRAINT fkVisitaDpto3 FOREIGN KEY (caRut) REFERENCES conserjeadministrador (caRut) ON UPDATE CASCADE,
 	CONSTRAINT checkVD1 CHECK (vdFechaingreso < vdFechaSalida)
 );
 
