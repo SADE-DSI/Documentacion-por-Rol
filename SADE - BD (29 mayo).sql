@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS persona (
 	peRut VARCHAR (13) ,
 	peNombresApellidos VARCHAR(80),
-	peActivo int(11) DEFAULT '1'
+	peActivo int(11) DEFAULT '1',
 	peEmail VARCHAR(30),
 	peTelefono VARCHAR(14),
 	peTipo VARCHAR(12),
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS dptolocal (
 	dlDireccion VARCHAR (767),
 	dlMts2Construidos FLOAT NOT NULL,
 	dlValorArriendo INTEGER,
-	dlActivo VARCHAR (2) NOT NULL
+	dlActivo VARCHAR (2) NOT NULL,
 	CONSTRAINT pkDptoLocal PRIMARY KEY (dlDireccion),
 	CONSTRAINT check1dptolocal CHECK(dlActivo=0 OR dlActivo=1) 
 );
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS pagomensual (
 	pmFechaRealPago DATE,
 	pmId int(10) unsigned DEFAULT NULL,
 	CONSTRAINT pkPagoMensual PRIMARY KEY (dlDireccion, pmFechaPago),
-UNIQUE KEY pmCodigo (pmCodigo)
+UNIQUE KEY pmCodigo (pmCodigo),
 	CONSTRAINT kfPagoMensual FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion) ON UPDATE CASCADE
 );
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS residedpto (
 	dlDireccion VARCHAR (767),
 	rdFechaInicio DATE NOT NULL,
 	rdFechaFin DATE,
-	CONSTRAINT pkResideDpto PRIMARY kEY (adRut, dlDireccion, fechaInicio),
+	CONSTRAINT pkResideDpto PRIMARY kEY (adRut, dlDireccion, rdFechaInicio),
 	CONSTRAINT fkResideDpto1 FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion) ON UPDATE CASCADE,
 	CONSTRAINT fkResideDpto2 FOREIGN KEY (adRut) REFERENCES arrendatariodueno (adRut) ON UPDATE CASCADE
 );
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS compromisopago	 (
 	cpObs VARCHAR (767),
 	gpNumeroBoleta int(10) unsigned DEFAULT NULL,
 	gpFechaRealPago DATE,
-	CONSTRAINT pkCP PRIMARY KEY(cpId),
+	CONSTRAINT pkCP PRIMARY KEY(cpId)
 );
 
 CREATE TABLE IF NOT EXISTS material(	
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS material(
 	maNombre VARCHAR (20),
 	maDescripcion VARCHAR(767),
 	maEstado INTEGER,
-	CONSTRAINT pkMaterial PRIMARY KEY(maCodigo),
+	CONSTRAINT pkMaterial PRIMARY KEY(maCodigo)
 );
 
 CREATE TABLE IF NOT EXISTS aviso(
