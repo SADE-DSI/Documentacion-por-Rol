@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS sueldopersonal (
 	spOtrosDescuentos INTEGER,
 	spHorasExtras DECIMAL,
 	CONSTRAINT pkSueldoPersonal PRIMARY kEY(peRut, spFechaPago),
-	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (peRut) REFERENCES persona(peRut) ON UPDATE CASCADE
+	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (peRut) REFERENCES contratopersonal(peRut) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS visita(
