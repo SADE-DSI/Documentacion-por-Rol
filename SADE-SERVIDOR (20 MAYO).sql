@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `contratopersonal` (
   `cpAFPMonto` int(10) unsigned DEFAULT NULL,
   `cpPrevisionNombre` varchar(20) DEFAULT NULL,
   `cpPrevisionMonto` int(10) unsigned DEFAULT NULL,
+  `cpSueldoBruto` int(10) unsigned DEFAULT NULL,
   `cpFechaInicio` date NOT NULL,
   `cpFechaFin` date DEFAULT NULL,
 	CONSTRAINT pkCP PRIMARY kEY(peRut, cpFechaInicio),
