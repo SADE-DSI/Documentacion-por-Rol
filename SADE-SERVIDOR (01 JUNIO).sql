@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `contratopersonal` (
   `cpPrevisionMonto` integer unsigned DEFAULT NULL,
   `cpFechaInicio` date NOT NULL,
   `cpFechaFin` date DEFAULT NULL,
-	CONSTRAINT pkCP PRIMARY kEY(peRut),
+	CONSTRAINT pkCP PRIMARY kEY(peRut, cpFechaInicio),
 	UNIQUE KEY `contratopersonal_index1305` (`peRut`,`cpFechaInicio`),
 	CONSTRAINT fk1CP FOREIGN KEY (peRut) REFERENCES persona(peRut) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
