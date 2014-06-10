@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `conserjeadministrador` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `contratopersonal` (
+  `cpCodigo` int(11) NOT NULL AUTO_INCREMENT,
   `peRut` varchar(13) NOT NULL,
   `cpAFPNombre` varchar(20) NOT NULL,
   `cpAFPMonto` integer DEFAULT NULL,
@@ -38,19 +39,20 @@ CREATE TABLE IF NOT EXISTS `contratopersonal` (
   `cpSueldoBruto` int(10) unsigned DEFAULT NULL,
   `cpFechaInicio` date NOT NULL,
   `cpFechaFin` date DEFAULT NULL,
-	CONSTRAINT pkCP PRIMARY kEY(peRut),
+	CONSTRAINT pkCP PRIMARY kEY(cpCodigo),
 	UNIQUE KEY `contratopersonal_index1305` (`peRut`,`cpFechaInicio`),
 	CONSTRAINT fk1CP FOREIGN KEY (peRut) REFERENCES persona(peRut) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `sueldopersonal` (
+  `spCodigo` int(11) NOT NULL AUTO_INCREMENT,	
   `spFechaPago` date NOT NULL,
-  `peRut` varchar(13) NOT NULL,
+  `cpCodigo` integer NOT NULL,
   `spOtrosDescuento` int(10) unsigned DEFAULT NULL,
   `spHorasExtra` decimal DEFAULT NULL,
-	CONSTRAINT pkSueldoPersonal PRIMARY kEY(peRut),
-	UNIQUE KEY `contratopersonal_index1305` (`peRut`,`spFechaPago`),
-	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (peRut) REFERENCES contratopersonal(peRut) ON UPDATE CASCADE
+	CONSTRAINT pkSueldoPersonal PRIMARY kEY(spCodigo),
+	UNIQUE KEY `contratopersonal_index1305` (`spCodigo`,`spFechaPago`),
+	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (cpCodigo) REFERENCES contratopersonal(cpCodigo) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `visita` (

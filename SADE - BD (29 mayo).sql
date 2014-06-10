@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS conserjeadministrador (
 );
 
 CREATE TABLE IF NOT EXISTS contratopersonal (
+ 	cpCodigo int(11) NOT NULL AUTO_INCREMENT,
 	peRut VARCHAR(13),
 	cpAFPNombre VARCHAR(20),
 	cpAFPMonto INTEGER,
@@ -37,17 +38,20 @@ CREATE TABLE IF NOT EXISTS contratopersonal (
 	cpSueldoBruto INTEGER,
 	cpFechaInicio DATE,
 	cpFechaFin DATE,
-	CONSTRAINT pkCP PRIMARY kEY(peRut, cpFechaInicio),
+	CONSTRAINT pkCP PRIMARY kEY(cpCodigo),
+	UNIQUE KEY ukCP(peRut,cpFechaInicio),
 	CONSTRAINT fk1CP FOREIGN KEY (peRut) REFERENCES persona(peRut) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS sueldopersonal (
-	peRut VARCHAR(13),
+	spCodigo int(11) NOT NULL AUTO_INCREMENT,
+	cpCodigo INTEGER,
 	spFechaPago DATE,
 	spOtrosDescuentos INTEGER,
 	spHorasExtras DECIMAL,
-	CONSTRAINT pkSueldoPersonal PRIMARY kEY(peRut, spFechaPago),
-	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (peRut) REFERENCES contratopersonal(peRut) ON UPDATE CASCADE
+	CONSTRAINT pkSueldoPersonal PRIMARY kEY(spCodigo),
+	UNIQUE KEY ukSueldoPersonal(spCodigo,	spFechaPago),
+	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (cpCodigo) REFERENCES contratopersonal(cpCodigo) ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS visita(
