@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS contratopersonal (
 	cpSueldoBruto INTEGER,
 	cpFechaInicio DATE,
 	cpFechaFin DATE,
+	cpValorHoraExtra INTEGER,
 	CONSTRAINT pkCP PRIMARY kEY(cpCodigo),
 	UNIQUE KEY ukCP(peRut,cpFechaInicio),
 	CONSTRAINT fk1CP FOREIGN KEY (peRut) REFERENCES persona(peRut) ON UPDATE CASCADE
