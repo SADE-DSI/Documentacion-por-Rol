@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS visitadpto (
 	vdFechaSalida DATETIME,
 	CONSTRAINT pkVisitaDpto PRIMARY KEY(vdCodigo),
 	UNIQUE KEY ukVD(viRut, vdFechaIngreso),
-	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut),
+	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut) ON UPDATE CASCADE,
 	CONSTRAINT fkVisitaDpto2 FOREIGN KEY (dlDireccion) REFERENCES dptolocal(dlDireccion) ON UPDATE CASCADE,
 	CONSTRAINT fkVisitaDpto3 FOREIGN KEY (caRut) REFERENCES conserjeadministrador (caRut) ON UPDATE CASCADE,
 	CONSTRAINT checkVD1 CHECK (vdFechaingreso < vdFechaSalida)

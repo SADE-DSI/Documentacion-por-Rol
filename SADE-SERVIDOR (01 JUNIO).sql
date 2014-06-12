@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `sueldopersonal` (
 
 CREATE TABLE IF NOT EXISTS `visita` (
   `viRut` varchar(13) NOT NULL,
-  `viNombresApellidos` varchar(80) NOT NULL,
+  `viNombresApellidos` varchar(80) DEFAULT NULL,
   `viObs` varchar(767) DEFAULT NULL,
 	CONSTRAINT pkVisita PRIMARY KEY (viRut)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `visitadpto` (
   `vdFechaSalida` datetime DEFAULT NULL,
   PRIMARY KEY (`vdCodigo`),
     UNIQUE KEY `visitadpto_index1304` (`vdFechaIngreso`,`viRut`),
-	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut),
+	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut) ON UPDATE CASCADE,
 	CONSTRAINT fkVisitaDpto2 FOREIGN KEY (dlDireccion) REFERENCES dptolocal(dlDireccion) ON UPDATE CASCADE,
 	CONSTRAINT fkVisitaDpto3 FOREIGN KEY (caRut) REFERENCES conserjeadministrador (caRut) ON UPDATE CASCADE,
 	CONSTRAINT checkVD1 CHECK (vdFechaingreso < vdFechaSalida)
