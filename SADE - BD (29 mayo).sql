@@ -116,12 +116,14 @@ CREATE TABLE IF NOT EXISTS residedpto (
 );
 
 CREATE TABLE IF NOT EXISTS visitadpto (
+	vdCodigo INTEGER NOT NULL AUTO_INCREMENT,
 	viRut VARCHAR (13),
 	dlDireccion VARCHAR (767),
 	vdFechaIngreso DATETIME,
 	caRut VARCHAR (13),
 	vdFechaSalida DATETIME,
-	CONSTRAINT pkVisitaDpto PRIMARY KEY(viRut, vdFechaIngreso),
+	CONSTRAINT pkVisitaDpto PRIMARY KEY(vdCodigo),
+	UNIQUE KEY ukVD(viRut, vdFechaIngreso),
 	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut),
 	CONSTRAINT fkVisitaDpto2 FOREIGN KEY (dlDireccion) REFERENCES dptolocal(dlDireccion) ON UPDATE CASCADE,
 	CONSTRAINT fkVisitaDpto3 FOREIGN KEY (caRut) REFERENCES conserjeadministrador (caRut) ON UPDATE CASCADE,

@@ -118,12 +118,13 @@ CREATE TABLE IF NOT EXISTS `residedpto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `visitadpto` (
+  `vdCodigo` INTEGER NOT NULL AUTO_INCREMENT,
   `vdFechaIngreso` datetime NOT NULL,
   `caRut` varchar(13) NOT NULL,
   `viRut` varchar(13) NOT NULL,
   `dlDireccion` varchar(767) NOT NULL,
   `vdFechaSalida` datetime DEFAULT NULL,
-  PRIMARY KEY (`vdFechaIngreso`),
+  PRIMARY KEY (`vdCodigo`),
     UNIQUE KEY `visitadpto_index1304` (`vdFechaIngreso`,`viRut`),
 	CONSTRAINT fkVisitaDpto1 FOREIGN KEY (viRut) REFERENCES visita (viRut),
 	CONSTRAINT fkVisitaDpto2 FOREIGN KEY (dlDireccion) REFERENCES dptolocal(dlDireccion) ON UPDATE CASCADE,
