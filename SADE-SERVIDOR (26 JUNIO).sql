@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `visitadpto` (
 
 CREATE TABLE IF NOT EXISTS `compromisopago` (
   `cpId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cpCodigo` integer unsigned NOT NULL,
+  `cpTipo` varchar(255) NOT NULL,
   `cpFechaVencimiento` date NOT NULL,
   `cpMonto` int(10) unsigned NOT NULL,
   `cpDescripcion` varchar(767) DEFAULT NULL,
