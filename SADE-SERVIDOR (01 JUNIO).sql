@@ -82,26 +82,26 @@ CREATE TABLE IF NOT EXISTS `espaciocomun` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS reservaespaciocomun  (
-  reFechaInicio datetime NOT NULL,
+  `reId` int(20) unsigned NOT NULL AUTO_INCREMENT,
+  `reFecha` date NOT NULL,
   `adRut` varchar(13) NOT NULL,
   ecCodigo VARCHAR (30) NOT NULL,
-  `reFechaFin` datetime NOT NULL,
-	CONSTRAINT pkREC PRIMARY KEY(reFechaInicio),
-	UNIQUE KEY `reservaespaciocomun_index1306` (`adRut`,`reFechaInicio`),
+  `reHoraInicio` time NOT NULL,
+  `reHoraFin` time NOT NULL,
+	CONSTRAINT pkREC PRIMARY KEY(reId),
+	UNIQUE KEY `reservaespaciocomun_index1306` (`ecCodigo`,`reFecha`,`reHoraInicio`),
 	CONSTRAINT fkREC1 FOREIGN KEY  (ecCodigo) REFERENCES espaciocomun(ecCodigo)ON UPDATE CASCADE,
-	CONSTRAINT fkREC2 FOREIGN KEY  (adRut) REFERENCES arrendatariodueno(adRut) ON UPDATE CASCADE,
-	CONSTRAINT checkREC1 CHECK (reFechaInicio < reFechaFin)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+	CONSTRAINT fkREC2 FOREIGN KEY  (adRut) REFERENCES arrendatariodueno(adRut) ON UPDATE CASCADE
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `pagomensual` (
-  `pmCodigo` int(20) unsigned NOT NULL AUTO_INCREMENT,
   `dlDireccion` varchar(767) NOT NULL,
   `pmFechaPago` date NOT NULL,
   `pmMonto` integer unsigned NOT NULL,
   `pmObs` varchar(767) DEFAULT NULL,
   `pmFechaRealPago` date NOT NULL,
-  `pmId` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`pmCodigo`),
+  `pmId` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`pmId`),
   UNIQUE KEY `pagoMensual_index1304` (`dlDireccion`,`pmFechaPago`),
   CONSTRAINT kfPagoMensual FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion) ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
