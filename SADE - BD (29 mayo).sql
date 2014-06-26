@@ -82,26 +82,28 @@ CREATE TABLE IF NOT EXISTS espaciocomun(
 );
 
 CREATE TABLE IF NOT EXISTS reservaespaciocomun (
+	reId INTEGER NOT NULL AUTO_INCREMENT,
 	ecCodigo VARCHAR (30),
-	reFechaInicio DATETIME,
-	reFechaFin DATETIME,
+	reFecha DATE
+	reHoraInicio TIME,
+	reHoraFin TIME,
 	adRut VARCHAR (13),
-	CONSTRAINT pkREC PRIMARY KEY(ecCodigo, reFechaInicio),
+	CONSTRAINT pkREC PRIMARY KEY(reId),
+	UNIQUE KEY rec (ecCodigo, reFecha, reHoraInicio),
 	CONSTRAINT fkREC1 FOREIGN KEY  (ecCodigo) REFERENCES espaciocomun(ecCodigo) ON UPDATE CASCADE,
 	CONSTRAINT fkREC2 FOREIGN KEY  (adRut) REFERENCES arrendatariodueno(adRut) ON UPDATE CASCADE,
 	CONSTRAINT checkREC1 CHECK (reFechaInicio < reFechaFin)
 );
 
 CREATE TABLE IF NOT EXISTS pagomensual (
-	pmCodigo bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+	pmId INTEGER NOT NULL AUTO_INCREMENT,
 	dlDireccion VARCHAR (767),
 	pmFechaPago DATE,
 	pmMonto INTEGER,
 	pmObs VARCHAR (767),
 	pmFechaRealPago DATE,
-	pmId int(10) unsigned DEFAULT NULL,
-	CONSTRAINT pkPagoMensual PRIMARY KEY (dlDireccion, pmFechaPago),
-UNIQUE KEY pmCodigo (pmCodigo),
+	CONSTRAINT pkPagoMensual PRIMARY KEY (pmId),
+UNIQUE KEY pmCodigo (dlDireccion, pmFechaPago),
 	CONSTRAINT kfPagoMensual FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion) ON UPDATE CASCADE
 );
 
