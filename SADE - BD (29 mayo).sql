@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS sueldopersonal (
 	spFechaPago DATE,
 	spOtrosDescuentos INTEGER,
 	spHorasExtras DECIMAL,
+	spFechaVencimiento DATE,
 	CONSTRAINT pkSueldoPersonal PRIMARY kEY(spCodigo),
 	UNIQUE KEY ukSueldoPersonal(spCodigo,	spFechaPago),
 	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (cpCodigo) REFERENCES contratopersonal(cpCodigo) ON UPDATE CASCADE
