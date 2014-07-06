@@ -48,11 +48,11 @@ CREATE TABLE IF NOT EXISTS sueldopersonal (
 	spCodigo int(11) NOT NULL AUTO_INCREMENT,
 	cpCodigo INTEGER,
 	spFechaPago DATE,
+spFechaVencimiento DATE,
 	spOtrosDescuentos INTEGER,
 	spHorasExtras DECIMAL,
-	spFechaVencimiento DATE,
 	CONSTRAINT pkSueldoPersonal PRIMARY kEY(spCodigo),
-	UNIQUE KEY ukSueldoPersonal(spCodigo,	spFechaPago),
+	UNIQUE KEY ukSueldoPersonal(spCodigo,	spFechaVencimiento),
 	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (cpCodigo) REFERENCES contratopersonal(cpCodigo) ON UPDATE CASCADE
 );
 
