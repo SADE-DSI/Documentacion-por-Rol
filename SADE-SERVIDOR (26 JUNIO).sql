@@ -49,10 +49,11 @@ CREATE TABLE IF NOT EXISTS `sueldopersonal` (
   `spCodigo` int(11) NOT NULL AUTO_INCREMENT,	
   `spFechaPago` date NOT NULL,
   `cpCodigo` integer NOT NULL,
+  `spFechaVencimiento` DATE,
   `spOtrosDescuentos` INTEGER NOT NULL,
   `spHorasExtras` decimal,
 	CONSTRAINT pkSueldoPersonal PRIMARY kEY(spCodigo),
-	UNIQUE KEY `contratopersonal_index1305` (`spCodigo`,`spFechaPago`),
+	UNIQUE KEY `contratopersonal_index1305` (`spCodigo`,`spFechaVencimiento`),
 	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (cpCodigo) REFERENCES contratopersonal(cpCodigo) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
