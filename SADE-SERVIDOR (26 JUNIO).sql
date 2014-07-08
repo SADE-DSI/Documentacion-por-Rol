@@ -49,10 +49,11 @@ CREATE TABLE IF NOT EXISTS `sueldopersonal` (
   `spCodigo` int(11) NOT NULL AUTO_INCREMENT,	
   `spFechaPago` date NOT NULL,
   `cpCodigo` integer NOT NULL,
+  `spFechaVencimiento` DATE,
   `spOtrosDescuentos` INTEGER NOT NULL,
   `spHorasExtras` decimal,
 	CONSTRAINT pkSueldoPersonal PRIMARY kEY(spCodigo),
-	UNIQUE KEY `contratopersonal_index1305` (`spCodigo`,`spFechaPago`),
+	UNIQUE KEY `contratopersonal_index1305` (`spCodigo`,`spFechaVencimiento`),
 	CONSTRAINT fk1SueldoPersonal FOREIGN KEY (cpCodigo) REFERENCES contratopersonal(cpCodigo) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -68,8 +69,7 @@ CREATE TABLE IF NOT EXISTS `dptolocal` (
   `dlMts2Construidos` float DEFAULT NULL,
   `dlValorArriendo` integer DEFAULT NULL,
   `dlActivo` varchar(2) DEFAULT NULL,
-	CONSTRAINT pkDptoLocal PRIMARY KEY (dlDireccion),
-	CONSTRAINT check1dptolocal CHECK(dlActivo=0 OR dlActivo=1) 
+	CONSTRAINT pkDptoLocal PRIMARY KEY (dlDireccion)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `espaciocomun` (
@@ -167,7 +167,9 @@ CREATE TABLE IF NOT EXISTS `sugerencias` (
   `sgId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `sfComentario` varchar(767) NOT NULL,
   `sfRespuesta` varchar(767) DEFAULT NULL,
-  `sfLeido` integer NOT NULL DEFAULT '0',
+  `sfLeido` varchar(10) NOT NULL DEFAULT 'Enviado',
+  `sfFecha` date DEFAULT NULL,
+  `sfUsuario` varchar(13) DEFAULT NULL,
   PRIMARY KEY (`sgId`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
