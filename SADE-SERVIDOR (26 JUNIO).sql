@@ -107,12 +107,13 @@ CREATE TABLE IF NOT EXISTS `pagomensual` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `residedpto` (
+  `rdId` INTEGER NOT NULL AUTO_INCREMENT,
   `rdFechaInicio` date NOT NULL,
   `adRut` varchar(13) NOT NULL,
   `dlDireccion` varchar(767) NOT NULL,
   `rdFechaFin` date DEFAULT NULL,
    `rdActivo` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`rdFechaInicio`),
+  PRIMARY KEY (`rdId`),
     UNIQUE KEY `residedpto_index1304` (`rdFechaInicio`,`dlDireccion`,`adRut`),
 	CONSTRAINT fkResideDpto1 FOREIGN KEY (dlDireccion) REFERENCES dptolocal (dlDireccion) ON UPDATE CASCADE,
 	CONSTRAINT fkResideDpto2 FOREIGN KEY (adRut) REFERENCES arrendatariodueno (adRut) ON UPDATE CASCADE
